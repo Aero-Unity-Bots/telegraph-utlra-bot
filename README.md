@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:050505,50:6A00FF,100:00C8FF&height=180&section=header&text=TELEGRAPH%20ULTRA%20BOT&fontSize=35&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Developed%20By%20Mohammed&descAlignY=60&descSize=16" width="100%">
+</p>
+
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=36BCF7F1&width=435&lines=Welcome+To+AU+Ultra+Telegraph+Bot;Create+Telegraph+Pages+Instantly;Made+By+Mohammed)](https://git.io/typing-svg)
 
 <p align="center">
@@ -131,8 +135,10 @@ If you like this bot, please give it a ⭐ on GitHub.
 </a>
 </p>
 
-📢 Share with friends
+<p align="center">
+  <b>Made with ❤️ by Mohammed</b>
+</p>
 
----
-
-# DON'T REMOVE MY CREDITS
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:050505,50:6A00FF,100:00C8FF&height=120&section=footer"/>
+</p>
