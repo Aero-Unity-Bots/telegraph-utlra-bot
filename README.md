@@ -82,7 +82,7 @@ Example:
     ─「 ᴅᴇᴩʟᴏʏ ᴏɴ ʀᴇɴᴅᴇʀ 」─
 </h3>
 <p align="center">
-<a href="https://render.com/deploy?repo=https://github.com/MohammedDev-yt/Rename-Bot-2GB">
+<a href="https://render.com/deploy?repo=https://github.com/MohammedDev-yt/telegraph-utlra-bot">
 <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render">
 </a>
 </p>
@@ -91,7 +91,7 @@ Example:
     ─「 ᴅᴇᴩʟᴏʏ ᴏɴ ᴋᴏʏᴇʙ 」─
 </h3>
 <p align="center">
-<a href="https://app.koyeb.com/deploy?type=git&repository=https://github.com/MohammedDev-yt/">
+<a href="https://app.koyeb.com/deploy?type=git&repository=https://github.com/MohammedDev-yt/telegraph-utlra-bot">
 <img src="https://img.shields.io/badge/Deploy%20on%20Koyeb-121212?style=for-the-badge&logo=koyeb" alt="Deploy on Koyeb">
 </a>
 </p>
