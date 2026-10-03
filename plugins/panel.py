@@ -1,49 +1,91 @@
 # ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
+# Don't Remove Credit
+# Ask Doubt @AU_Bot_Discussion
+# Owner @Mr_Mohammed_29
 # ------------------------- #
 
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton
+)
+
 import config
 
+
 # ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
+# PANEL BUTTONS
+# ------------------------- #
+
+def panel_buttons():
+
+    return InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    "• Stats •",
+                    callback_data="stats_panel"
+                ),
+                InlineKeyboardButton(
+                    "• Broadcast •",
+                    callback_data="broadcast_panel"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "• Settings •",
+                    callback_data="settings_panel"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "• Close •",
+                    callback_data="close_panel"
+                )
+            ]
+        ]
+    )
+
+
+# ------------------------- #
+# PANEL COMMAND
 # ------------------------- #
 
 @Client.on_message(filters.command("panel"))
 async def panel(_, message):
 
+    if not message.from_user:
+        return
+
     if message.from_user.id != config.OWNER_ID:
-        return await message.reply_text("❌ You are not allowed to use this command.")
+
+        return await message.reply_text(
+            "❌ <b>You are not allowed to use this command.</b>"
+        )
 
     text = """
-🧠 ADMIN CONTROL PANEL
+<b>🧠 ADMIN CONTROL PANEL</b>
 
 Manage your bot from here:
+
+📊 <b>Stats</b>
+→ View total users and posts.
+
+📢 <b>Broadcast</b>
+→ Send a message to bot users.
+
+⚙️ <b>Settings</b>
+→ View account/settings information.
 """
-# ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
-# ------------------------- #
-    buttons = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("• Stats •", callback_data="stats_panel"),
-            InlineKeyboardButton("•  Broadcast •", callback_data="broadcast_panel")
-        ],
-        [
-            InlineKeyboardButton("• Close •", callback_data="close_panel")
-        ]
-    ])
 
-    await message.reply_text(text, reply_markup=buttons)
+    await message.reply_text(
+        text,
+        reply_markup=panel_buttons()
+    )
+
 
 # ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
+# Don't Remove Credit
+# Ask Doubt @AU_Bot_Discussion
+# Owner @Mr_Mohammed_29
 # ------------------------- #
