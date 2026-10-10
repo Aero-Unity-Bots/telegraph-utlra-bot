@@ -25,9 +25,10 @@
 ### ✨ Features
 
 - 📝 Create Telegraph Pages
+- 🛰 create screenshots, samples,speak
 - ⚡ Fast & Lightweight
+- ✨️ User information from settings 
 - 👥 User Statistics
-- 📊 Admin Stats Panel
 - ☁️ MongoDB Database
 - 🌐 Render & Koyeb Supported
 
@@ -48,9 +49,11 @@
 ## ✨ Commands
 
 ```txt
-start  - Start Bot
-tgm    - Create Telegraph Page
-panel  - Admin/Owner Control Panel (Owner only)
+start  - Start the Bot
+tgm - Reply To Documents,videos to get link
+screenshot - Generate video screenshots relpy with media / files
+sample - Generate a short video sample reply with media/ files
+spek - Generate an audio spectrogram reply with media / files
 stats  - Bot Statistics (Owner Only)
 broadcast - Send Messages To All User (Owner Only)
 ```
