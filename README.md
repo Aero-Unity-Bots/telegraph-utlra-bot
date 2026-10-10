@@ -19,6 +19,7 @@
   </a>
 </p>
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 > **A powerful Telegram bot for creating Telegraph pages instantly.**
 
@@ -31,6 +32,8 @@
 - 👥 User Statistics
 - ☁️ MongoDB Database
 - 🌐 Render & Koyeb Supported
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 <details>
 <summary><b>Click Here To Expand Variables</b></summary>
@@ -58,6 +61,8 @@ stats  - Bot Statistics (Owner Only)
 broadcast - Send Messages To All User (Owner Only)
 ```
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+
 <details>
 <summary><h3>
 - <b> ᴅᴇᴘʟᴏʏᴍᴇɴᴛ </b>
@@ -83,7 +88,7 @@ broadcast - Send Messages To All User (Owner Only)
 
 </details>
 
----
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 <details><summary>How To Keep Your Bot Alive</summary>
 <br>
