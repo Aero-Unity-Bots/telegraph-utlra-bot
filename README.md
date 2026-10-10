@@ -129,10 +129,9 @@ After adding monitor click:
 ✅ Your bot will stay alive 24/7.
 </details>
 
-## 👨‍💻 Developer
+👨‍💻 Developer : <a href="https://t.me/Mr_Mohammed_29>Mohammed</a>
 
-<a href="https://t.me/Mr_Mohammed_29">ᴍᴏʜᴀᴍᴍᴇᴅ</a>
-
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 ## ⭐ Fork & Star This Repo
 
