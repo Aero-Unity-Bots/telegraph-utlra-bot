@@ -58,24 +58,6 @@ stats  - Bot Statistics (Owner Only)
 broadcast - Send Messages To All User (Owner Only)
 ```
 
-## 📌 Bot Feature
-
-### 📝 Telegraph Post
-
-Create Telegraph pages using:
-
-```txt
-/tgm Title | Your Text Here
-```
-
-Example:
-
-```txt
-/tgm One Piece | One Piece is one of the greatest anime ever made.
-```
-
----
-
 <details>
 <summary><h3>
 - <b> ᴅᴇᴘʟᴏʏᴍᴇɴᴛ </b>
