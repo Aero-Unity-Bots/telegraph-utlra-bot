@@ -1,4 +1,3 @@
-
 # ------------------------- #
 # Don't Remove Credit
 # Ask Doubt @AU_Bot_Discussion
@@ -6,6 +5,7 @@
 # ------------------------- #
 
 import asyncio
+import html
 
 from pyrogram import Client, filters
 from pyrogram.types import (
@@ -49,94 +49,102 @@ HELP_TEXT = """
 • Reply to a video or document with <code>/tgm</code>
 to create a detailed MediaInfo Telegraph page.
 
-<b>/tgm</b> Reply To Documents,videos to get link
-<b>/screenshot</b> - Generate video screenshots relpy with media
-<b>/sample</b> - Generate a short video sample reply with media
-<b>/spek</b> - Generate an audio spectrogram reply with media
+<b>/tgm</b> - Create a Telegraph link
+<b>/screenshot</b> - Generate video screenshots
+<b>/sample</b> - Generate a short video sample
+<b>/spek</b> - Generate an audio spectrogram
 """
 
 # ------------------------- #
-# START BUTTONS
+# BUTTONS
 # ------------------------- #
 
 def start_buttons():
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton(
-                "• About •",
-                callback_data="about"
-            ),
-            InlineKeyboardButton(
-                "• Help •",
-                callback_data="help"
-            )
+            InlineKeyboardButton("• About •", callback_data="about"),
+            InlineKeyboardButton("• Help •", callback_data="help"),
         ],
         [
-            InlineKeyboardButton(
-                "• Updates •",
-                url="https://t.me/Aero_Unity"
-            ),
-            InlineKeyboardButton(
-                "• Owner •",
-                url="https://t.me/Mr_Mohammed_29"
-            )
+            InlineKeyboardButton("• Updates •", url="https://t.me/Aero_Unity"),
+            InlineKeyboardButton("• Owner •", url="https://t.me/Mr_Mohammed_29"),
         ],
         [
-            InlineKeyboardButton(
-                "• Settings •",
-                callback_data="settings_panel"
-            )
+            InlineKeyboardButton("• Settings •", callback_data="settings_panel"),
         ],
     ])
 
 
 def home_button():
     return InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton(
-                "• Home •",
-                callback_data="start_home"
-            )
-        ]
+        [InlineKeyboardButton("• Home •", callback_data="start_home")]
     ])
 
 
 def about_buttons():
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton(
-                "• Updates •",
-                url="https://t.me/Aero_Unity"
-            ),
-            InlineKeyboardButton(
-                "• Owner •",
-                url="https://t.me/Mr_Mohammed_29"
-            )
+            InlineKeyboardButton("• Updates •", url="https://t.me/Aero_Unity"),
+            InlineKeyboardButton("• Owner •", url="https://t.me/Mr_Mohammed_29"),
         ],
-        [
-            InlineKeyboardButton(
-                "• Home •",
-                callback_data="start_home"
-            )
-        ]
+        [InlineKeyboardButton("• Home •", callback_data="start_home")],
     ])
 
 
-def stats_buttons():
+def settings_buttons():
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton(
-                "• Refresh •",
-                callback_data="refresh_stats"
-            )
+            InlineKeyboardButton("🔄 Reset All", callback_data="reset_settings"),
         ],
         [
-            InlineKeyboardButton(
-                "• Home •",
-                callback_data="start_home"
-            )
-        ]
+            InlineKeyboardButton("• Home •", callback_data="start_home"),
+        ],
     ])
+
+
+# ------------------------- #
+# EDIT CURRENT MENU
+# ------------------------- #
+
+async def show_menu(query, text, buttons, photo=None):
+    """Update the existing menu message instead of sending a new message."""
+
+    msg = query.message
+
+    try:
+        if msg.photo:
+            if photo:
+                await msg.edit_media(
+                    media=__import__(
+                        "pyrogram"
+                    ).types.InputMediaPhoto(
+                        media=photo,
+                        caption=text,
+                    ),
+                    reply_markup=buttons,
+                )
+            else:
+                await msg.edit_caption(
+                    caption=text,
+                    reply_markup=buttons,
+                )
+        elif photo:
+            await msg.delete()
+            await query.message.reply_photo(
+                photo=photo,
+                caption=text,
+                reply_markup=buttons,
+            )
+        else:
+            await msg.edit_text(
+                text,
+                reply_markup=buttons,
+                disable_web_page_preview=True,
+            )
+
+    except Exception as error:
+        if "MESSAGE_NOT_MODIFIED" not in str(error):
+            raise
 
 
 # ------------------------- #
@@ -145,32 +153,23 @@ def stats_buttons():
 
 @Client.on_message(filters.command("start"))
 async def start(client, message):
-
     try:
         add_user(message.from_user.id)
     except Exception:
         pass
 
-    status = await message.reply_text(
-        "🚀 Sʜᴀᴅᴏᴡ Oғ Mᴏɴᴀʀᴄʜ . . ."
-    )
-
+    status = await message.reply_text("⚡ Wᴇʟᴄᴏᴍɪɴɢ Yᴏᴜ . . .")
     await asyncio.sleep(0.5)
-    await status.edit_text("🎊")
 
-    await asyncio.sleep(0.5)
-    await status.edit_text("⚡")
-
-    await asyncio.sleep(0.5)
-    await status.edit_text("🤖 Wᴇʟᴄᴏᴍɪɴɢ Yᴏᴜ . . .")
-
-    await asyncio.sleep(0.7)
-    await status.delete()
+    try:
+        await status.delete()
+    except Exception:
+        pass
 
     await message.reply_photo(
         photo=START_IMAGE,
         caption=START_TEXT,
-        reply_markup=start_buttons()
+        reply_markup=start_buttons(),
     )
 
 
@@ -180,46 +179,45 @@ async def start(client, message):
 
 @Client.on_callback_query()
 async def callback_handler(client: Client, query: CallbackQuery):
-
     data = query.data
 
-    try:
-        await query.answer()
-    except Exception:
-        pass
+    await query.answer()
 
     # ABOUT
     if data == "about":
-        await query.message.reply_photo(
-            photo=ABOUT_IMAGE,
-            caption=ABOUT_TEXT,
-            reply_markup=about_buttons()
-        )
+        try:
+            await show_menu(
+                query,
+                ABOUT_TEXT,
+                about_buttons(),
+                photo=ABOUT_IMAGE,
+            )
+        except Exception:
+            await query.answer("Unable to open About.", show_alert=True)
 
     # HELP
     elif data == "help":
-        await query.message.reply_photo(
-            photo=ABOUT_IMAGE,
-            caption=HELP_TEXT,
-            reply_markup=home_button()
-        )
+        try:
+            await show_menu(
+                query,
+                HELP_TEXT,
+                home_button(),
+                photo=ABOUT_IMAGE,
+            )
+        except Exception:
+            await query.answer("Unable to open Help.", show_alert=True)
 
     # HOME
     elif data == "start_home":
         try:
-            await query.message.edit_caption(
-                caption=START_TEXT,
-                reply_markup=start_buttons()
+            await show_menu(
+                query,
+                START_TEXT,
+                start_buttons(),
+                photo=START_IMAGE,
             )
         except Exception:
-            try:
-                await query.message.reply_photo(
-                    photo=START_IMAGE,
-                    caption=START_TEXT,
-                    reply_markup=start_buttons()
-                )
-            except Exception:
-                pass
+            await query.answer("Unable to return Home.", show_alert=True)
 
     # SETTINGS
     elif data == "settings_panel":
@@ -231,21 +229,18 @@ async def callback_handler(client: Client, query: CallbackQuery):
             user = await client.get_users(user_id)
             first_name = user.first_name or "User"
 
-            post_count = posts.count_documents(
-                {"user_id": user_id}
-            )
+            post_count = posts.count_documents({"user_id": user_id})
 
             user_data = get_user_settings(
                 user_id,
-                telegram_first_name=first_name
+                telegram_first_name=first_name,
             )
 
-            account_name = user_data.get(
-                "account_name", first_name
+            account_name = html.escape(
+                str(user_data.get("account_name", first_name))
             )
-
-            author_name = user_data.get(
-                "author_name", first_name
+            author_name = html.escape(
+                str(user_data.get("author_name", first_name))
             )
 
             text = f"""
@@ -258,94 +253,36 @@ async def callback_handler(client: Client, query: CallbackQuery):
 <b>No. of Posts :</b> {post_count}
 """
 
-            buttons = InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton(
-                        "USER ID",
-                        callback_data="noop"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "DOMAIN : Telegraph",
-                        callback_data="noop"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        f"ACCOUNT : {account_name}",
-                        callback_data="noop"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        f"AUTHOR : {author_name}",
-                        callback_data="noop"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "PROFILE LINK",
-                        url=(
-                            "https://t.me/"
-                            + author_name.lstrip("@")
-                        )
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        f"NO. OF POSTS : {post_count}",
-                        callback_data="noop"
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "🔄 Reset All",
-                        callback_data="reset_settings"
-                    ),
-                    InlineKeyboardButton(
-                        "🔙 Home",
-                        callback_data="start_home"
-                    )
-                ]
-            ])
-
-            await query.message.reply_text(
+            await show_menu(
+                query,
                 text,
-                reply_markup=buttons
+                settings_buttons(),
             )
 
         except Exception as error:
-            await query.message.reply_text(
-                f"⚠️ Unable to load settings.\n"
-                f"<code>{str(error)[:300]}</code>",
-                reply_markup=home_button()
+            await query.answer(
+                f"Settings error: {str(error)[:150]}",
+                show_alert=True,
             )
 
     # REFRESH STATS
     elif data == "refresh_stats":
         try:
             users = total_users()
-            posts = total_posts()
+            posts_count = total_posts()
 
             text = f"""
 <b>📊 BOT STATISTICS</b>
 
 👥 <b>Total Users :</b> {users}
-📝 <b>Total Posts :</b> {posts}
+📝 <b>Total Posts :</b> {posts_count}
 <b>Powered By :</b> @Aero_Unity
 """
 
-            await query.message.reply_text(
-                text,
-                reply_markup=stats_buttons()
-            )
+            await show_menu(query, text, home_button())
 
         except Exception:
-            await query.message.reply_text(
-                "⚠️ Database error. Please try again later.",
-                reply_markup=stats_buttons()
-            )
+            await query.answer("Database error.", show_alert=True)
 
     # RESET SETTINGS
     elif data == "reset_settings":
@@ -354,38 +291,21 @@ async def callback_handler(client: Client, query: CallbackQuery):
 
             reset_user_settings(query.from_user.id)
 
-            await query.message.reply_text(
-                "✅ <b>Settings reset completed.</b>",
-                reply_markup=InlineKeyboardMarkup([
-                    [
-                        InlineKeyboardButton(
-                            "• Settings •",
-                            callback_data="settings_panel"
-                        ),
-                        InlineKeyboardButton(
-                            "• Home •",
-                            callback_data="start_home"
-                        )
-                    ]
-                ])
-            )
-
-        except ImportError:
-            await query.message.reply_text(
-                "⚠️ reset_user_settings is missing "
-                "from utils/user_settings.py",
-                reply_markup=home_button()
+            await show_menu(
+                query,
+                "<b>✅ Settings reset completed.</b>",
+                settings_buttons(),
             )
 
         except Exception:
-            await query.message.reply_text(
-                "⚠️ Unable to reset settings.",
-                reply_markup=home_button()
+            await query.answer(
+                "Unable to reset settings.",
+                show_alert=True,
             )
 
-    # NOOP
     elif data == "noop":
         return
+
 
 # ------------------------- #
 # Don't Remove Credit
