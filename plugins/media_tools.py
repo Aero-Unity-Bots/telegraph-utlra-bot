@@ -13,11 +13,17 @@ import tempfile
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-SAMPLE_DURATION = 10
+# ------------------------- #
+# SETTINGS
+# ------------------------- #
+
+SAMPLE_DURATION = 15
 MAX_UPLOAD_SIZE = 2 * 1024 * 1024 * 1024
 
 
 async def run_ffmpeg(*args):
+    """Run FFmpeg asynchronously and report errors."""
+
     process = await asyncio.create_subprocess_exec(
         "ffmpeg",
         "-hide_banner",
@@ -27,6 +33,7 @@ async def run_ffmpeg(*args):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
+
     stdout, stderr = await process.communicate()
 
     if process.returncode != 0:
@@ -34,10 +41,13 @@ async def run_ffmpeg(*args):
             stderr.decode(errors="replace")[-1500:]
             or "FFmpeg processing failed."
         )
+
     return stdout
 
 
 async def download_replied_media(client, message, folder):
+    """Download media from the replied-to message."""
+
     replied = message.reply_to_message
 
     if not replied:
@@ -47,8 +57,11 @@ async def download_replied_media(client, message, folder):
         return None
 
     media = (
-        replied.video or replied.document or replied.audio
-        or replied.voice or replied.animation
+        replied.video
+        or replied.document
+        or replied.audio
+        or replied.voice
+        or replied.animation
     )
 
     if not media:
@@ -56,7 +69,7 @@ async def download_replied_media(client, message, folder):
         return None
 
     if media.file_size and media.file_size > MAX_UPLOAD_SIZE:
-        await message.reply_text("⚠️ File exceeds the 2 GB limit.")
+        await message.reply_text("⚠️ File exceeds the configured 2 GB limit.")
         return None
 
     status = await message.reply_text("📥 Downloading media...")
@@ -64,12 +77,10 @@ async def download_replied_media(client, message, folder):
     try:
         path = await client.download_media(
             replied,
-            file_name=os.path.join(folder, "input_media")
+            file_name=os.path.join(folder, "input_media"),
         )
     except Exception as error:
-        await status.edit_text(
-            f"❌ Download failed:\n<code>{html.escape(str(error)[:500])}</code>"
-        )
+        await show_error(status, "Download failed", error)
         return None
 
     if not path or not os.path.isfile(path):
@@ -80,11 +91,15 @@ async def download_replied_media(client, message, folder):
 
 
 def check_output(path):
+    """Check that an output file exists and is not empty."""
+
     if not os.path.isfile(path) or os.path.getsize(path) == 0:
         raise RuntimeError("FFmpeg did not generate a valid output file.")
 
 
 async def show_error(status, title, error):
+    """Show HTML-safe error details in Telegram."""
+
     try:
         await status.edit_text(
             f"❌ {title}:\n"
@@ -103,6 +118,7 @@ async def show_error(status, title, error):
 async def screenshot_command(client: Client, message: Message):
     with tempfile.TemporaryDirectory() as folder:
         result = await download_replied_media(client, message, folder)
+
         if not result:
             return
 
@@ -115,8 +131,10 @@ async def screenshot_command(client: Client, message: Message):
             await run_ffmpeg(
                 "-i", input_path,
                 "-vf",
-                "fps=1/5,scale=320:180:force_original_aspect_ratio=decrease,"
-                "pad=320:180:(ow-iw)/2:(oh-ih)/2,tile=3x3",
+                "fps=1/5,"
+                "scale=320:180:force_original_aspect_ratio=decrease,"
+                "pad=320:180:(ow-iw)/2:(oh-ih)/2,"
+                "tile=3x3",
                 "-frames:v", "1",
                 "-an",
                 "-c:v", "mjpeg",
@@ -128,8 +146,9 @@ async def screenshot_command(client: Client, message: Message):
 
             await message.reply_photo(
                 photo=output_path,
-                caption="<b>🖼 Video Screenshot Sheet</b>"
+                caption="<b>🖼 Video Screenshot Sheet</b>",
             )
+
             await status.delete()
 
         except Exception as error:
@@ -145,6 +164,7 @@ async def screenshot_command(client: Client, message: Message):
 async def sample_command(client: Client, message: Message):
     with tempfile.TemporaryDirectory() as folder:
         result = await download_replied_media(client, message, folder)
+
         if not result:
             return
 
@@ -153,9 +173,11 @@ async def sample_command(client: Client, message: Message):
 
         try:
             await status.edit_text(
-                f"🎬 Creating a {SAMPLE_DURATION}-second sample..."
+                f"🎬 Creating a {SAMPLE_DURATION}-second video sample..."
             )
 
+            # Keep the original scene and audio for the first 15 seconds.
+            # If the source has no audio, the optional audio map is ignored.
             await run_ffmpeg(
                 "-i", input_path,
                 "-t", str(SAMPLE_DURATION),
@@ -163,10 +185,10 @@ async def sample_command(client: Client, message: Message):
                 "-map", "0:a:0?",
                 "-c:v", "libx264",
                 "-preset", "ultrafast",
-                "-crf", "28",
+                "-crf", "23",
                 "-pix_fmt", "yuv420p",
                 "-c:a", "aac",
-                "-b:a", "96k",
+                "-b:a", "128k",
                 "-movflags", "+faststart",
                 "-f", "mp4",
                 output_path,
@@ -176,9 +198,12 @@ async def sample_command(client: Client, message: Message):
 
             await message.reply_video(
                 video=output_path,
-                caption=f"🎬 <b>Video Sample</b>\n"
-                        f"Duration: Up to {SAMPLE_DURATION} seconds"
+                caption=(
+                    "🎬 <b>Video Sample</b>\n"
+                    f"Duration: Up to {SAMPLE_DURATION} seconds"
+                ),
             )
+
             await status.delete()
 
         except Exception as error:
@@ -194,6 +219,7 @@ async def sample_command(client: Client, message: Message):
 async def spek_command(client: Client, message: Message):
     with tempfile.TemporaryDirectory() as folder:
         result = await download_replied_media(client, message, folder)
+
         if not result:
             return
 
@@ -203,13 +229,15 @@ async def spek_command(client: Client, message: Message):
         try:
             await status.edit_text("🎵 Generating audio spectrogram...")
 
+            # Map the generated spectrogram as a video/image stream.
+            # Explicitly select the PNG encoder and image2 output format.
             await run_ffmpeg(
                 "-i", input_path,
                 "-filter_complex",
-                "[0:a:0]showspectrumpic=s=1600x900:legend=1:scale=log[spec]",
+                "[0:a:0]showspectrumpic="
+                "s=1600x900:legend=1:scale=log[spec]",
                 "-map", "[spec]",
                 "-frames:v", "1",
-                "-an",
                 "-c:v", "png",
                 "-f", "image2",
                 output_path,
@@ -219,8 +247,9 @@ async def spek_command(client: Client, message: Message):
 
             await message.reply_photo(
                 photo=output_path,
-                caption="<b>🎵 Audio Spectrogram</b>"
+                caption="<b>🎵 Audio Spectrogram</b>",
             )
+
             await status.delete()
 
         except Exception as error:
