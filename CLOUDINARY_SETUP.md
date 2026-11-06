@@ -12,7 +12,7 @@ Click below to create your free Cloudinary account.
 
 [![Cloudinary Register](https://img.shields.io/badge/Cloudinary-Create_Free_Account-blue?logo=cloudinary)](https://cloudinary.com/users/register_free)
 
-[![Cloudinary Register](https://telegra.ph/file/c336ef94cf19f22232483-2d2bf2cf30e5651528.jpg)
+![Cloudinary Register](https://telegra.ph/file/c336ef94cf19f22232483-2d2bf2cf30e5651528.jpg)
 
 1. Open the registration page.
 2. Create an account using your email or Google.
@@ -39,6 +39,8 @@ Click below to create your free Cloudinary account.
 ## 🔑 Step 3: Get API Key and API Secret
 
 [👉 Open Cloudinary API Keys](https://console.cloudinary.com/settings/api-keys)
+
+![Cloudinary API Generate](https://telegra.ph/file/75eaa86a19777dedd593a-d4b79b3b9f891849b5.jpg)
 
 ![Cloudinary API Settings](https://img.youtube.com/vi/ok9mHOuvVSI/hqdefault.jpg)
 
