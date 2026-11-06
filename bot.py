@@ -1,38 +1,67 @@
-# ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
+import os
+import config
 from threading import Thread
 from flask import Flask
 from pyrogram import Client
-import config
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 app = Flask(__name__)
 
-# ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 @app.route("/")
 def home():
     return "Telegraph Bot Running"
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
+
+@app.route("/health")
+def health():
+    return "OK", 200
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def run_web():
     app.run(
         host="0.0.0.0",
-        port=8080
+        port=int(os.environ.get("PORT", 8080)),
+        use_reloader=False
     )
 
-# ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 bot = Client(
     "TelegraphUltraBot",
@@ -42,19 +71,38 @@ bot = Client(
     plugins=dict(root="plugins")
 )
 
-Thread(target=run_web).start()
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
+
+Thread(
+    target=run_web,
+    daemon=True
+).start()
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 print("""
-╔══════════════════════╗
-║   ᴍᴅ-ᴅᴇᴠᴇʟᴏᴘᴇʀ-ʏᴛ         ║
-║   ᴛᴇʟᴇɢʀᴀᴘʜ ꜱᴛᴀʀᴛᴇᴅ.       ║
-╚══════════════════════╝
+╔════════════════════════════╗
+║     ᴍᴅ-ᴅᴇᴠᴇʟᴏᴘᴇʀ-ʏᴛ       ║
+║    ᴛᴇʟᴇɢʀᴀᴘʜ ꜱᴛᴀʀᴛᴇᴅ     ║
+╚════════════════════════════╝
 """)
 
 bot.run()
 
-# ------------------------- #
-# Don't Remove Credit 
-# Ask Doubt @AU_Bot_Discussion 
-# Owner @Mr_Mohammed_29 
-# ------------------------- #
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
