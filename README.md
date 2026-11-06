@@ -42,12 +42,16 @@
 
 | Variable | Description |
 |-----------|------------|
-| BOT_TOKEN | Telegram Bot Token |
-| API_ID | Telegram API ID |
-| API_HASH | Telegram API Hash |
-| OWNER_ID | Telegram User ID |
-| MONGO_URL | MongoDB URL |
-| DB_NAME | Database Name |
+| `BOT_TOKEN` | Telegram Bot Token |
+| `API_ID` | Telegram API ID |
+| `API_HASH` | Telegram API Hash |
+| `OWNER_ID` | Telegram User ID |
+| `MONGO_URL` | MongoDB URL |
+| `DB_NAME` | Database Name |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary Cloud Name |
+| `CLOUDINARY_API_KEY` | Cloudinary API Key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API Secret |
+
 
 </details>
 
