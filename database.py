@@ -1,43 +1,80 @@
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
 
-from pymongo import MongoClient
-import config
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
+
 import time
+import config
+from pymongo import MongoClient, ASCENDING
+from pymongo.errors import PyMongoError
 
-
-# ---------------- CONNECTION ---------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 client = MongoClient(
     config.MONGO_URL,
-    serverSelectionTimeoutMS=5000
+    serverSelectionTimeoutMS=10000,
+    connectTimeoutMS=10000,
+    socketTimeoutMS=20000,
+    maxPoolSize=10,
+    retryWrites=True
 )
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
+
 db = client[config.DB_NAME]
+users = db["users"]
+posts = db["posts"]
+force_sub_channels = db["force_sub_channels"]
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
-# ---------------- COLLECTIONS ---------------- #
+try:
+    client.admin.command("ping")
+    print("✅ MongoDB connected successfully!")
 
-users = db.users
-posts = db.posts
-
-
-# ---------------- INDEXES ---------------- #
+except PyMongoError as error:
+    raise RuntimeError(
+        f"MongoDB connection failed: {error}"
+    )
 
 users.create_index(
-    "user_id",
+    [("user_id", ASCENDING)],
     unique=True
 )
 
 posts.create_index(
-    "user_id"
+    [("user_id", ASCENDING), ("time", ASCENDING)]
 )
 
+force_sub_channels.create_index(
+    "chat_id",
+    unique=True
+)
 
-# ---------------- USER ---------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def add_user(user_id):
 
@@ -45,49 +82,70 @@ def add_user(user_id):
         return
 
     users.update_one(
-        {"user_id": user_id},
+        {"user_id": int(user_id)},
         {
             "$setOnInsert": {
-                "user_id": user_id,
+                "user_id": int(user_id),
                 "time": int(time.time())
             }
         },
         upsert=True
     )
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
-# ---------------- POSTS ---------------- #
+def save_post(user_id, url, title):
 
-def save_post(
-    user_id,
-    url,
-    title
-):
+    if not user_id or not url:
+        return None
 
-    posts.insert_one(
-        {
-            "user_id": user_id,
-            "url": url,
-            "title": title,
-            "time": int(time.time())
-        }
-    )
+    result = posts.insert_one({
+        "user_id": int(user_id),
+        "url": url,
+        "title": title or "Untitled",
+        "time": int(time.time())
+    })
 
+    return result.inserted_id
 
-# ---------------- STATS ---------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def total_users():
-
     return users.count_documents({})
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def total_posts():
-
     return posts.count_documents({})
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
+def close_database():
+    client.close()
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
