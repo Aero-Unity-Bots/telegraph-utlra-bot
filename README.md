@@ -52,6 +52,10 @@
 | `CLOUDINARY_API_KEY` | Cloudinary API Key |
 | `CLOUDINARY_API_SECRET` | Cloudinary API Secret |
 
+## ☁️ Cloudinary Configuration
+
+📖 [Click Here to Learn How to Create Cloudinary API Credentials](CLOUDINARY_SETUP.md)
+
 
 </details>
 
