@@ -1,103 +1,77 @@
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
+import html
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
 from database import posts
 from utils.user_settings import get_user_settings
 
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
-# ------------------------- #
-# SETTINGS BUTTONS
-# ------------------------- #
-
-def settings_buttons(
-    user_id,
-    post_count,
-    account_name,
-    author_name
-):
-
-    username = str(author_name).lstrip("@")
+def settings_buttons():
 
     return InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    f"USER ID : {user_id}",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "DOMAIN : Telegraph",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "DEFAULT PAGE : @AU_Telegraph_Post_Bot",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    f"ACCOUNT NAME : {account_name}",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    f"AUTHOR : {author_name}",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "PROFILE LINK",
-                    url=f"https://t.me/{username}"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    f"NO. OF POSTS : {post_count}",
-                    callback_data="noop"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "🔄 Reset All",
-                    callback_data="reset_settings"
+                    "• Uᴘᴅᴀᴛᴇs •",
+                    url="https://t.me/Aero_Unity"
                 ),
                 InlineKeyboardButton(
-                    "🔙 Go Back",
-                    callback_data="start_home"
+                    "• Dᴇᴠᴇʟᴏᴘᴇʀ •",
+                    url="https://t.me/Mr_Mohammed_29"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "• Cʟᴏsᴇ •",
+                    callback_data="close_settings"
                 )
             ]
         ]
     )
 
-
-# ------------------------- #
-# SETTINGS COMMAND
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 @Client.on_message(filters.command("settings"))
-async def settings(_, message):
+async def settings(client, message):
 
-    user_id = message.from_user.id
+    if not message.from_user:
+        return
 
-    first_name = (
-        message.from_user.first_name
-        or "User"
-    )
+    user = message.from_user
+    user_id = user.id
+    first_name = user.first_name or "User"
+    username = user.username
+
+    if username:
+        username_text = (
+            f'<a href="https://t.me/{html.escape(username)}">'
+            f'@{html.escape(username)}</a>'
+        )
+    else:
+        username_text = (
+            f'<a href="tg://user?id={user_id}">'
+            f'{html.escape(first_name)}</a>'
+        )
 
     try:
-
+    
         post_count = posts.count_documents(
             {"user_id": user_id}
         )
@@ -107,48 +81,107 @@ async def settings(_, message):
             telegram_first_name=first_name
         )
 
-        account_name = user_data.get(
-            "account_name",
-            first_name
+        account_name = html.escape(
+            str(user_data.get("account_name") or first_name)
         )
 
-        author_name = user_data.get(
-            "author_name",
-            first_name
+        author_name = html.escape(
+            str(user_data.get("author_name") or "Unknown")
         )
 
-    except Exception:
+        profile_photo = None
+        dc_id = "Unknown"
 
-        return await message.reply_text(
-            "⚠️ <b>Unable to load settings.</b>\n"
+        if user.photo:
+            dc_id = getattr(
+                user.photo,
+                "dc_id",
+                "Unknown"
+            )
+
+            try:
+                profile_photo = await client.download_media(
+                    user.photo.big_file_id,
+                    in_memory=True
+                )
+
+            except Exception as error:
+                print(
+                    f"[Profile Photo Download Error] {error}"
+                )
+
+        text = f"""
+<b>⚙️ Sᴇᴛᴛɪɴɢs </b>
+
+🔎 <b>Nᴀᴍᴇ :</b> {account_name}
+👤 <b>Usᴇʀɴᴀᴍᴇ :</b> {username_text}
+🆔 <b>ID :</b> <code>{user_id}</code>
+🌐 <b>Dᴀᴛᴀ Cᴇɴᴛᴇʀ ID :</b> <code>{dc_id}</code>
+📝 <b>Tᴏᴛᴀʟ Pᴏsᴛs :</b> <code>{post_count}</code>
+🔗 <b>Dᴏᴍᴀɪɴ :</b> Tᴇʟᴇɢʀᴀᴘʜ
+"""
+        buttons = settings_buttons()
+
+        # Send profile photo if available
+        if profile_photo:
+
+            await message.reply_photo(
+                photo=profile_photo,
+                caption=text,
+                reply_markup=buttons
+            )
+
+        else:
+
+            await message.reply_text(
+                text,
+                reply_markup=buttons,
+                disable_web_page_preview=True
+            )
+
+    except Exception as error:
+
+        print(
+            f"[Settings Error] "
+            f"{type(error).__name__}: {error}"
+        )
+
+        await message.reply_text(
+            "⚠️ <b>Unable to load account settings.</b>\n"
             "Please try again later."
         )
 
-    text = f"""
-<b>⚙️ ACCOUNT SETTINGS</b>
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
-<b>User ID :</b> <code>{user_id}</code>
-<b>Domain :</b> Telegraph
+@Client.on_callback_query(
+    filters.regex("^close_settings$")
+)
+async def close_settings(_, query):
 
-<b>Account Name :</b> {account_name}
-<b>Author Name :</b> {author_name}
-
-<b>No. of Posts :</b> {post_count}
-"""
-
-    await message.reply_text(
-        text,
-        reply_markup=settings_buttons(
-            user_id,
-            post_count,
-            account_name,
-            author_name
+    if not query.from_user:
+        return
+        
+    if (
+        query.message.reply_to_message
+        and query.message.reply_to_message.from_user
+        and query.from_user.id != query.message.reply_to_message.from_user.id
+    ):
+        return await query.answer(
+            "This settings message belongs to another user.",
+            show_alert=True
         )
-    )
 
+    await query.message.delete()
+    await query.answer("Settings closed!")
 
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
