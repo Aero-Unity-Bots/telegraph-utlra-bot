@@ -27,6 +27,8 @@ Click below to create your free Cloudinary account.
 
 ![Cloudinary Dashboard](https://telegra.ph/file/8ba436dd026f403cec959-b9d10907227f52d682.jpg)
 
+![Cloudinary Dashboard Preview](https://telegra.ph/file/2e286af9632bb13737c11-d65572fbd1e6cd696e.jpg)
+
 1. Log in to your Cloudinary account.
 2. Open the Dashboard.
 3. Find the Product Environment section.
