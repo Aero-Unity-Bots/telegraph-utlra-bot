@@ -12,7 +12,7 @@ Click below to create your free Cloudinary account.
 
 [![Cloudinary Register](https://img.shields.io/badge/Cloudinary-Create_Free_Account-blue?logo=cloudinary)](https://cloudinary.com/users/register_free)
 
-https://telegra.ph/file/c336ef94cf19f22232483-2d2bf2cf30e5651528.jpg
+[![Cloudinary Register](https://telegra.ph/file/c336ef94cf19f22232483-2d2bf2cf30e5651528.jpg)
 
 1. Open the registration page.
 2. Create an account using your email or Google.
