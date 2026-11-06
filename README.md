@@ -31,7 +31,10 @@
 - ✨️ User information from settings 
 - 👥 User Statistics
 - ☁️ MongoDB Database
-- 🌐 Render & Koyeb Supported
+- 🔒 Multiple Force Subscription Channels & Groups
+- 📢 Advanced Broadcast System Supports Images, Videos, GIFs, Documents and Inline buttons 
+- 📊 Owner Stats Panel
+-
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
@@ -49,16 +52,24 @@
 
 </details>
 
+
 ## ✨ Commands
 
-```txt
-start  - Start the Bot
-tgm - Reply To Documents,videos to get link
-screenshot - Generate video screenshots relpy with media / files
-sample - Generate a short video sample reply with media/ files
-spek - Generate an audio spectrogram reply with media / files
-stats  - Bot Statistics (Owner Only)
-broadcast - Send Messages To All User (Owner Only)
+**User Commands**
+
+```text
+start       - Start the Bot
+tgm         - Create Telegraph Page
+screenshot  - Generate Video Screenshots
+sample      - Generate Video Sample
+spek        - Generate Audio Spectrogram
+settings    - User Settings
+stats       - Bot Statistics [Owner only]
+status      - Show All Registered Users [Owner only]
+broadcast   - Broadcast Messages To all Users [Owner only]
+addfsub     - Add Force Subscription [Owner only]
+delfsub     - Remove Force Subscription [Owner only]
+fsublist    - Show Force Subscription List [Owner only]
 ```
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
