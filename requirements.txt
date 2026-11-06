@@ -1,16 +1,19 @@
+
 # ------------------------- #
 # Don't Remove Credit
 # Ask Doubt @AU_Bot_Discussion
 # Owner @Mr_Mohammed_29
 # ------------------------- #
 
-pyrogram
-tgcrypto
+pyrogram==2.0.106
+tgcrypto==1.2.5
 telegraph
-pymongo
-flask
+pymongo==4.9.2
+dnspython>=2.6.1
+flask==3.0.3
 gunicorn
-pillow
+pillow==10.4.0
+cloudinary
 
 # ------------------------- #
 # Don't Remove Credit
