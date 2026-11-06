@@ -25,15 +25,15 @@
 
 ### ✨ Features
 
-- 📝 Create Telegraph Pages
-- 🛰 create screenshots, samples,speak
+- 📝 Create Telegraph Pages and Preview images inside
+- 🛰 create screenshots, samples, speak
 - ⚡ Fast & Lightweight
 - ✨️ User information from settings 
 - 👥 User Statistics
 - ☁️ MongoDB Database
 - 🔒 Multiple Force Subscription Channels & Groups
 - 📢 Advanced Broadcast System Supports Images, Videos, GIFs, Documents and Inline buttons 
-- 📊 Owner Stats Panel
+- 📊 Owner Stats and status Panel
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
