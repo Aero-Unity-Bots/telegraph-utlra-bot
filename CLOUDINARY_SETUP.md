@@ -64,7 +64,7 @@ Click below to create your free Cloudinary account.
 
 ## ⚙️ Step 4: Add Variables to Render
 
-[👉 Open Render Dashboard](https://dashboard.render.com/
+[👉 Open Render Dashboard](https://dashboard.render.com/)
 
 ![Render Dashboard](https://telegra.ph/file/49fbd027050df6bbaf6d8-10776306498eca1857.jpg)
 
