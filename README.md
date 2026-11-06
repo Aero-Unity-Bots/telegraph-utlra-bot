@@ -17,6 +17,11 @@
   <a href="https://t.me/Mr_Mohammed_29" target="_blank">
     <img src="https://img.shields.io/badge/Developer-Mohammed-purple?style=for-the-badge&logo=telegram&logoColor=white" alt="Developer"/>
   </a>
+
+  <a href="https://cloudinary.com/" target="_blank">
+  <img src="https://img.shields.io/badge/Storage-Cloudinary-blue?style=for-the-badge&logo=cloudinary&logoColor=white" alt="Cloudinary"/>
+  </a>
+  
 </p>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
