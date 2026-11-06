@@ -43,10 +43,12 @@ Click below to create your free Cloudinary account.
 ![Cloudinary API Settings](https://img.youtube.com/vi/ok9mHOuvVSI/hqdefault.jpg)
 
 1. Open API Keys from Settings.
-2. Find your API Key.
+2. Create API Key
+3. Write Your Name and asked questions fill that 
+4. Click on Generate Key
 3. Copy your API Key.
 4. Find API Secret.
-5. Tap the eye icon to reveal the secret.
+5. Tap the eye icon to reveal the Api,Api secret.
 6. Complete verification if requested.
 7. Copy your API Secret.
 
