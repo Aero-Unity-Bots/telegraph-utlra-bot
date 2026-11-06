@@ -34,7 +34,6 @@
 - 🔒 Multiple Force Subscription Channels & Groups
 - 📢 Advanced Broadcast System Supports Images, Videos, GIFs, Documents and Inline buttons 
 - 📊 Owner Stats Panel
--
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
