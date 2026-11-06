@@ -1,15 +1,19 @@
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
+
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 from database import users
 
-
-# ------------------------- #
-# GET USER SETTINGS
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def get_user_settings(
     user_id,
@@ -37,15 +41,17 @@ def get_user_settings(
         "author_name": author_name
     }
 
-
-# ------------------------- #
-# RESET USER SETTINGS
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
 
 def reset_user_settings(user_id):
 
-    result = users.update_one(
-        {"user_id": user_id},
+    users.update_one(
+        {"user_id": int(user_id)},
         {
             "$unset": {
                 "account_name": "",
@@ -54,11 +60,11 @@ def reset_user_settings(user_id):
         }
     )
 
-    return result.modified_count > 0
+    return True
 
-
-# ------------------------- #
-# Don't Remove Credit
-# Ask Doubt @AU_Bot_Discussion
-# Owner @Mr_Mohammed_29
-# ------------------------- #
+# ------------------------ #
+# Don't Remove My Credits
+# Owner: @Mr_Mohammed_29
+# Updates: @Aero_Unity 
+# Support : @Coders_Grp 
+# ------------------------ #
