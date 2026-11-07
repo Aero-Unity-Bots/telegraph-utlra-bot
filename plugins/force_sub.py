@@ -23,7 +23,8 @@ from pyrogram.types import (
     InlineKeyboardButton
 )
 from pyrogram.errors import UserNotParticipant
-from database import users, force_sub_channels
+from database import users, add_user, force_sub_channels
+from plugins.start import START_IMAGE, START_TEXT, start_buttons
 
 # ------------------------ #
 # Don't Remove My Credits
@@ -216,36 +217,49 @@ async def force_sub_middleware(client, message):
 # Support : @Coders_Grp 
 # ------------------------ #
 
+
 @Client.on_callback_query(
     filters.regex("^check_fsub$")
 )
 async def check_fsub_callback(client, query):
 
-    if await check_force_sub(client, query.from_user.id):
-        await query.answer(
-            " Subscription verified!",
-            show_alert=True
-        )
+    user_id = query.from_user.id
 
-        try:
-            await query.message.delete()
-        except Exception:
-            pass
-
-        try:
-            await client.send_message(
-                query.from_user.id,
-                "/start"
-            )
-        except Exception:
-            pass
-
-    else:
-        await query.answer(
+    if not await check_force_sub(client, user_id):
+        return await query.answer(
             "Join all required channels and groups first.",
             show_alert=True
         )
+
+    await query.answer("✅ Subscription verified!")
+
+    try:
+        add_user(user_id)
+    except Exception as error:
+        LOGGER.warning("Add user error: %s", error)
+
+    try:
+        await query.message.delete()
+    except Exception:
+        pass
         
+    try:
+        await client.send_photo(
+            chat_id=user_id,
+            photo=START_IMAGE,
+            caption=START_TEXT,
+            reply_markup=start_buttons()
+        )
+
+    except Exception as error:
+        LOGGER.warning("Welcome photo error: %s", error)
+
+        await client.send_message(
+            chat_id=user_id,
+            text=START_TEXT,
+            reply_markup=start_buttons()
+        )
+
 # ------------------------ #
 # Don't Remove My Credits
 # Owner: @Mr_Mohammed_29
